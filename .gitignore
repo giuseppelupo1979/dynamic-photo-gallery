@@ -1,0 +1,11 @@
+# Immagini personali — non incluse nel repository
+img/*
+!img/.gitkeep
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Claude Code
+.claude/

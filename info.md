@@ -142,3 +142,38 @@ Gallerie foto dinamica/
 - Compatibile con tutti i browser moderni (Chrome, Safari, Firefox, Edge)
 - `webkitdirectory` su mobile mostra una selezione file standard (l'attributo cartella è solo desktop)
 - Tutte le funzionalità precedenti sono mantenute: zoom, fade, swipe, thumbnail strip, ricerca, ordinamento, download, URL hash, tastiera
+
+---
+
+### [6] — Export galleria statica
+**File modificato:** `index.html`
+
+**Cosa è stato fatto:**
+- Aggiunto pulsante **"Esporta galleria"** nell'header (color accent, appare solo dopo aver caricato una cartella)
+- Aggiunto modal di configurazione prima dell'export
+
+**Modal di configurazione:**
+- Campo **Titolo galleria** — personalizzabile, usato nel `<title>` e nel `<h1>` della pagina esportata
+- Checkbox **Rimuovi coordinate GPS** — se attivo, le immagini vengono ridisegnate tramite `canvas` rimuovendo tutti i metadati EXIF dal file
+- Lista foto con checkbox individuali — selezione/deselezione singola o massiva ("Tutte" / "Nessuna")
+- Contatore "N / totale" in tempo reale
+
+**Due modalità di export:**
+1. **Esporta HTML** — file `.html` auto-contenuto con foto incorporate in base64; funziona con doppio click senza server
+2. **Esporta ZIP** — archivio `.zip` con `index.html` + cartella `img/` con i file immagine; ideale per hosting
+
+**Flusso durante l'export:**
+1. Caricamento EXIF mancanti per le foto selezionate (skip se già in cache)
+2. Conversione immagini: base64 via `FileReader` (veloce, senza GPS strip) o via `canvas` (se GPS strip attivo, rimuove tutti i metadati EXIF)
+3. Generazione del file HTML/ZIP
+4. Download automatico nel browser
+
+**Caratteristiche della galleria esportata:**
+- Stessa UI e design della app principale (tema scuro, grid, dettaglio, zoom, swipe, tastiera, thumbnail strip)
+- Metadati EXIF hardcodati nell'array `images[]` — non richiede `exifr.js` né connessione di rete
+- Funziona completamente offline (per HTML export) o con soli file locali (ZIP)
+- Ricerca testuale e ordinamento inclusi
+- JS scritto senza template literal per compatibilità con l'embedding nel generatore
+
+**Librerie aggiuntive:**
+- `JSZip@3.10.1` — caricata in modo lazy da CDN solo quando si usa "Esporta ZIP"

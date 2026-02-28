@@ -385,7 +385,7 @@ let navigating     = false;
 function handleFolderSelect(input) {
   const fileList   = Array.from(input.files);
   const imageFiles = fileList.filter(f =>
-    /\.(jpe?g|png|gif|webp|heic|heif|bmp|tiff?|avif)$/i.test(f.name)
+    /\.(jpe?g|png)$/i.test(f.name)
   );
   input.value = '';
   if (imageFiles.length === 0) return;

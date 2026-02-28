@@ -124,7 +124,7 @@ Gallerie foto dinamica/
 
 **Flusso dinamico:**
 1. L'utente clicca "Apri cartella" → si apre il dialogo di selezione cartella
-2. Il JS filtra i file per estensione immagine (jpg, jpeg, png, gif, webp, heic, heif, bmp, tiff, avif)
+2. Il JS filtra i file per estensione immagine (jpg, jpeg, png)
 3. Per ogni file viene creato un `URL.createObjectURL()` (blob URL) e un record minimo `{file, filename, width:null, ...}`
 4. Il File object viene salvato in `fileMap[filename]` per l'accesso EXIF
 5. La galleria viene costruita e i metadati vengono letti in modo asincrono tramite `exifr.js` direttamente dai `File` object (affidabile anche da `file://`)
@@ -142,6 +142,15 @@ Gallerie foto dinamica/
 - Compatibile con tutti i browser moderni (Chrome, Safari, Firefox, Edge)
 - `webkitdirectory` su mobile mostra una selezione file standard (l'attributo cartella è solo desktop)
 - Tutte le funzionalità precedenti sono mantenute: zoom, fade, swipe, thumbnail strip, ricerca, ordinamento, download, URL hash, tastiera
+
+---
+
+### [7] — Filtro estensioni: solo JPEG e PNG
+**File modificato:** `index.html`
+
+**Cosa è stato fatto:**
+- La regex di filtro in `handleFolderSelect()` è stata ristretta da tutti i formati immagine (`jpg, jpeg, png, gif, webp, heic, heif, bmp, tiff, avif`) a soli **JPEG e PNG** (`/\.(jpe?g|png)$/i`)
+- I file con altri formati (GIF, WebP, HEIC, BMP, TIFF, AVIF, ecc.) vengono ora ignorati silenziosamente
 
 ---
 
